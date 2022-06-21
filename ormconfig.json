@@ -1,0 +1,8 @@
+{
+  "type": "mysql",
+  "host":"localhost",
+  "username":"root",
+  "password":"password",
+  "database":"klaxoon",
+  "port":3306
+}

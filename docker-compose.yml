@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      - MYSQL_USER=mysql
+      - MYSQL_DATABASE=klaxoon
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - '3306:3306'
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - 'db'
+  dev:
+    container_name: klaxoon-test-dev
+    image: klaxoon-test-dev:1.0.0
+    build:
+        context: .
+        dockerfile: ./Dockerfile
+    environment:
+      - DB_HOST=host.docker.internal
+    command: npm run dev
+    ports:
+        - '3000:3000'
+    restart: unless-stopped
+    depends_on:
+      - 'db'
